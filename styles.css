@@ -1,3 +1,7 @@
+body {
+  width: 100%;
+}
+
 #gameContainer {
   font-family: "Permanent Marker", cursive;
   text-align: center;
@@ -18,4 +22,25 @@
   line-height: 75px;
   font-size: 50px;
   cursor: pointer;
+}
+footer {
+  text-align: center;
+  font-family: "Permanent Marker", cursive;
+  font-size: small;
+  margin-top: 50px;
+}
+
+button {
+  font-family: "Permanent Marker", cursive;
+  font-size: 20px;
+  padding: 10px 20px;
+  margin-top: 20px;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+  border-radius: 5px;
+  background-color: blueviolet;
+
+}
+button:hover {
+  background-color: darkviolet;
+  color: white;
 }

@@ -63,7 +63,7 @@ function checkWinner() {
     running = false;
   }
   else if(!options.includes("")){
-    statusText.textContent = `Draw!`;
+    statusText.textContent = `You both are Dumb!😂`;
     running = false;
   } 
   else{
