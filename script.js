@@ -18,24 +18,53 @@ let running = false;
 initializeGame();
 
 function initializeGame() {
-  cells.forEach(cell => cell.addEventListener("click", cellClicked));
+  cells.forEach(cell => {
+    cell.addEventListener("click", cellClicked);
+    cell.addEventListener("keydown", cellKeyDown);
+  });
   restartButton.addEventListener("click", restartGame);
   statusText.textContent = `${currentPlayer}'s turn`;
   running = true;
 }
+function cellKeyDown(e) {
+  const key = e.key;
+  if (key === "Enter" || key === " ") {
+    e.preventDefault();
+    this.click();
+    return;
+  }
+  const index = Number(this.getAttribute("data-cell-index"));
+  let nextIndex = null;
+  if (key === 'ArrowRight') {
+    nextIndex = (index % 3 === 2) ? index - 2 : index + 1;
+  } else if (key === 'ArrowLeft') {
+    nextIndex = (index % 3 === 0) ? index + 2 : index - 1;
+  } else if (key === 'ArrowUp') {
+    nextIndex = (index - 3 >= 0) ? index - 3 : index + 6;
+  } else if (key === 'ArrowDown') {
+    nextIndex = (index + 3 < 9) ? index + 3 : index - 6;
+  }
+  if (nextIndex !== null) {
+    e.preventDefault();
+    cells[nextIndex].focus();
+  }
+}
+
 function cellClicked() {
-  const cellIndex = this.getAttribute("cellIndex");
-  
+  const cellIndex = this.getAttribute("data-cell-index");
+
   if(options[cellIndex] !== "" || !running){
     return;
   }
-  
+
   updateCell(this, cellIndex);
   checkWinner();
 }
 function updateCell(cell, index) {
   options[index] = currentPlayer;
   cell.textContent = currentPlayer;
+  cell.setAttribute('aria-pressed', 'true');
+  cell.disabled = true;
 }
 function changePlayer() {
   currentPlayer = (currentPlayer === "X") ? "O" : "X";
@@ -43,24 +72,30 @@ function changePlayer() {
 }
 function checkWinner() {
   let roundWon = false;
-  
+  let winningCombo = null;
+
   for(let i = 0; i < winConditions.length; i++) {
     const condition = winConditions[i];
     const cellA = options[condition[0]];
     const cellB = options[condition[1]];
     const cellC = options[condition[2]];
-    
+
     if(cellA === "" || cellB === "" || cellC === "") {
       continue;
     }
     if(cellA === cellB && cellB === cellC){
       roundWon = true;
+      winningCombo = condition;
       break;
     }
   }
   if(roundWon) {
     statusText.textContent = `${currentPlayer} Wins!`;
     running = false;
+    if (winningCombo) {
+      winningCombo.forEach(i => cells[i].classList.add('win'));
+    }
+    cells.forEach(cell => cell.disabled = true);
   }
   else if(!options.includes("")){
     statusText.textContent = `Draw!`;
@@ -74,6 +109,11 @@ function restartGame() {
   currentPlayer = "X";
   options = ["", "", "", "", "", "", "", "", ""];
   statusText.textContent = `${currentPlayer}'s turn`;
-  cells.forEach(cell => cell.textContent = "");
+  cells.forEach(cell => {
+    cell.textContent = "";
+    cell.disabled = false;
+    cell.setAttribute('aria-pressed', 'false');
+    cell.classList.remove('win');
+  });
   running = true;
 }
