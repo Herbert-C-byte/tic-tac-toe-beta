@@ -8,22 +8,22 @@
   <title>Tic Tac Toe</title>
 </head>
 <body>
-  <div id="gameContainer">
+  <main id="gameContainer" role="main">
     <h1>Tic Tac Toe</h1>
-    <div id="cellContainer">
-      <div cellIndex="0" class="cell"></div>
-      <div cellIndex="1" class="cell"></div>
-      <div cellIndex="2" class="cell"></div>
-      <div cellIndex="3" class="cell"></div>
-      <div cellIndex="4" class="cell"></div>
-      <div cellIndex="5" class="cell"></div>
-      <div cellIndex="6" class="cell"></div>
-      <div cellIndex="7" class="cell"></div>
-      <div cellIndex="8" class="cell"></div>
+    <div id="cellContainer" role="grid" aria-label="Tic Tac Toe board">
+      <button type="button" data-cell-index="0" class="cell" aria-label="Cell 1" aria-pressed="false"></button>
+      <button type="button" data-cell-index="1" class="cell" aria-label="Cell 2" aria-pressed="false"></button>
+      <button type="button" data-cell-index="2" class="cell" aria-label="Cell 3" aria-pressed="false"></button>
+      <button type="button" data-cell-index="3" class="cell" aria-label="Cell 4" aria-pressed="false"></button>
+      <button type="button" data-cell-index="4" class="cell" aria-label="Cell 5" aria-pressed="false"></button>
+      <button type="button" data-cell-index="5" class="cell" aria-label="Cell 6" aria-pressed="false"></button>
+      <button type="button" data-cell-index="6" class="cell" aria-label="Cell 7" aria-pressed="false"></button>
+      <button type="button" data-cell-index="7" class="cell" aria-label="Cell 8" aria-pressed="false"></button>
+      <button type="button" data-cell-index="8" class="cell" aria-label="Cell 9" aria-pressed="false"></button>
     </div>
-    <h2 id="statusText"></h2>
-    <button id="restartButton">Restart</button>
-  </div>
+    <h2 id="statusText" aria-live="polite" aria-atomic="true"></h2>
+    <button id="restartButton" type="button">Restart</button>
+  </main>
 
   <script src="script.js"></script>
 </body>
