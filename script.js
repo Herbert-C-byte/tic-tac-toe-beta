@@ -1,6 +1,8 @@
 const cells = document.querySelectorAll(".cell");
 const statusText = document.querySelector("#statusText");
 const restartButton = document.querySelector("#restartButton");
+const xWinsDisplay = document.querySelector("#xWins");
+const oWinsDisplay = document.querySelector("#oWins");
 const winConditions = [
   [0, 1, 2],
   [3, 4, 5],
@@ -14,6 +16,8 @@ const winConditions = [
 let options = ["", "", "", "", "", "", "", "", ""];
 let currentPlayer = "X";
 let running = false;
+let xWins = 0;
+let oWins = 0;
 
 initializeGame();
 
@@ -63,6 +67,7 @@ function cellClicked() {
 function updateCell(cell, index) {
   options[index] = currentPlayer;
   cell.textContent = currentPlayer;
+  cell.setAttribute('data-player', currentPlayer);
   cell.setAttribute('aria-pressed', 'true');
   cell.disabled = true;
 }
@@ -95,6 +100,14 @@ function checkWinner() {
     if (winningCombo) {
       winningCombo.forEach(i => cells[i].classList.add('win'));
     }
+    // Update win counter
+    if (currentPlayer === "X") {
+      xWins++;
+      xWinsDisplay.textContent = xWins;
+    } else {
+      oWins++;
+      oWinsDisplay.textContent = oWins;
+    }
     cells.forEach(cell => cell.disabled = true);
   }
   else if(!options.includes("")){
@@ -113,6 +126,7 @@ function restartGame() {
     cell.textContent = "";
     cell.disabled = false;
     cell.setAttribute('aria-pressed', 'false');
+    cell.removeAttribute('data-player');
     cell.classList.remove('win');
   });
   running = true;

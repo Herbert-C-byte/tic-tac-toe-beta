@@ -10,6 +10,10 @@
 <body>
   <main id="gameContainer" role="main">
     <h1>Tic Tac Toe</h1>
+    <div id="scoreBoard">
+      <div class="score-item"><span class="score-label">X Wins:</span> <span id="xWins" class="score-value">0</span></div>
+      <div class="score-item"><span class="score-label">O Wins:</span> <span id="oWins" class="score-value">0</span></div>
+    </div>
     <div id="cellContainer" role="grid" aria-label="Tic Tac Toe board">
       <button type="button" data-cell-index="0" class="cell" aria-label="Cell 1" aria-pressed="false"></button>
       <button type="button" data-cell-index="1" class="cell" aria-label="Cell 2" aria-pressed="false"></button>
