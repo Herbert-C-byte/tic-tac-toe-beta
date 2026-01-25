@@ -1,8 +1,11 @@
 const cells = document.querySelectorAll(".cell");
 const statusText = document.querySelector("#statusText");
 const restartButton = document.querySelector("#restartButton");
+const resetScoresButton = document.querySelector("#resetScoresButton");
 const xWinsDisplay = document.querySelector("#xWins");
 const oWinsDisplay = document.querySelector("#oWins");
+const drawsDisplay = document.querySelector("#draws");
+const totalGamesDisplay = document.querySelector("#totalGames");
 const winConditions = [
   [0, 1, 2],
   [3, 4, 5],
@@ -18,6 +21,8 @@ let currentPlayer = "X";
 let running = false;
 let xWins = 0;
 let oWins = 0;
+let draws = 0;
+let totalGames = 0;
 
 initializeGame();
 
@@ -27,6 +32,7 @@ function initializeGame() {
     cell.addEventListener("keydown", cellKeyDown);
   });
   restartButton.addEventListener("click", restartGame);
+  resetScoresButton.addEventListener("click", resetScores);
   statusText.textContent = `${currentPlayer}'s turn`;
   running = true;
 }
@@ -108,11 +114,17 @@ function checkWinner() {
       oWins++;
       oWinsDisplay.textContent = oWins;
     }
+    totalGames++;
+    totalGamesDisplay.textContent = totalGames;
     cells.forEach(cell => cell.disabled = true);
   }
   else if(!options.includes("")){
     statusText.textContent = `Draw!`;
     running = false;
+    draws++;
+    drawsDisplay.textContent = draws;
+    totalGames++;
+    totalGamesDisplay.textContent = totalGames;
   } 
   else{
     changePlayer();
@@ -130,4 +142,16 @@ function restartGame() {
     cell.classList.remove('win');
   });
   running = true;
+}
+
+function resetScores() {
+  xWins = 0;
+  oWins = 0;
+  draws = 0;
+  totalGames = 0;
+  xWinsDisplay.textContent = 0;
+  oWinsDisplay.textContent = 0;
+  drawsDisplay.textContent = 0;
+  totalGamesDisplay.textContent = 0;
+  restartGame();
 }

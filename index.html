@@ -12,7 +12,11 @@
     <h1>Tic Tac Toe</h1>
     <div id="scoreBoard">
       <div class="score-item"><span class="score-label">X Wins:</span> <span id="xWins" class="score-value">0</span></div>
+      <div class="score-item"><span class="score-label">Draws:</span> <span id="draws" class="score-value">0</span></div>
       <div class="score-item"><span class="score-label">O Wins:</span> <span id="oWins" class="score-value">0</span></div>
+    </div>
+    <div id="stats">
+      <p id="gamesPlayed">Games Played: <span id="totalGames">0</span></p>
     </div>
     <div id="cellContainer" role="grid" aria-label="Tic Tac Toe board">
       <button type="button" data-cell-index="0" class="cell" aria-label="Cell 1" aria-pressed="false"></button>
@@ -26,7 +30,10 @@
       <button type="button" data-cell-index="8" class="cell" aria-label="Cell 9" aria-pressed="false"></button>
     </div>
     <h2 id="statusText" aria-live="polite" aria-atomic="true"></h2>
-    <button id="restartButton" type="button">Restart</button>
+    <div id="buttonContainer">
+      <button id="restartButton" type="button" class="btn btn-primary">Restart Game</button>
+      <button id="resetScoresButton" type="button" class="btn btn-secondary">Reset Scores</button>
+    </div>
   </main>
 
   <script src="script.js"></script>
