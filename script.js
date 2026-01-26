@@ -24,6 +24,34 @@ let oWins = 0;
 let draws = 0;
 let totalGames = 0;
 
+// Load scores from localStorage
+function loadScores() {
+  const saved = localStorage.getItem('ticTacToeScores');
+  if (saved) {
+    const data = JSON.parse(saved);
+    xWins = data.xWins || 0;
+    oWins = data.oWins || 0;
+    draws = data.draws || 0;
+    totalGames = data.totalGames || 0;
+    updateScoreDisplay();
+  }
+}
+
+// Save scores to localStorage
+function saveScores() {
+  const data = { xWins, oWins, draws, totalGames };
+  localStorage.setItem('ticTacToeScores', JSON.stringify(data));
+}
+
+// Update all score displays
+function updateScoreDisplay() {
+  xWinsDisplay.textContent = xWins;
+  oWinsDisplay.textContent = oWins;
+  drawsDisplay.textContent = draws;
+  totalGamesDisplay.textContent = totalGames;
+}
+
+loadScores();
 initializeGame();
 
 function initializeGame() {
@@ -109,22 +137,21 @@ function checkWinner() {
     // Update win counter
     if (currentPlayer === "X") {
       xWins++;
-      xWinsDisplay.textContent = xWins;
     } else {
       oWins++;
-      oWinsDisplay.textContent = oWins;
     }
     totalGames++;
-    totalGamesDisplay.textContent = totalGames;
+    updateScoreDisplay();
+    saveScores();
     cells.forEach(cell => cell.disabled = true);
   }
   else if(!options.includes("")){
     statusText.textContent = `Draw!`;
     running = false;
     draws++;
-    drawsDisplay.textContent = draws;
     totalGames++;
-    totalGamesDisplay.textContent = totalGames;
+    updateScoreDisplay();
+    saveScores();
   } 
   else{
     changePlayer();
@@ -149,9 +176,7 @@ function resetScores() {
   oWins = 0;
   draws = 0;
   totalGames = 0;
-  xWinsDisplay.textContent = 0;
-  oWinsDisplay.textContent = 0;
-  drawsDisplay.textContent = 0;
-  totalGamesDisplay.textContent = 0;
+  updateScoreDisplay();
+  saveScores();
   restartGame();
 }
