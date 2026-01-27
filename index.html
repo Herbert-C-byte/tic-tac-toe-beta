@@ -6,8 +6,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="styles.css">
   <title>Tic Tac Toe</title>
+  <script>
+    // Load theme preference before page renders to avoid flash
+    const theme = localStorage.getItem('ticTacToeTheme') || 'light';
+    document.documentElement.setAttribute('data-theme', theme);
+  </script>
 </head>
 <body>
+  <button id="themeToggle" type="button" class="theme-toggle" aria-label="Toggle dark/light theme">
+    <span class="theme-icon">🌙</span>
+  </button>
   <main id="gameContainer" role="main">
     <h1>Tic Tac Toe</h1>
     <div id="scoreBoard">

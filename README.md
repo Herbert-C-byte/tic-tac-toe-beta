@@ -4,6 +4,7 @@ A modern, accessible two-player Tic Tac Toe game with persistent score tracking 
 
 ## Features
 
+- **Dark/Light Theme Toggle**: Quick theme switcher in the top-right corner with preference saved
 - **Accessible Design**: Full keyboard navigation (arrow keys), ARIA labels, and screen reader support
 - **Persistent Scoring**: Scores are automatically saved to browser localStorage and restored on page reload
 - **Smooth Animations**: Animated mark placement and win celebration effects
@@ -14,10 +15,11 @@ A modern, accessible two-player Tic Tac Toe game with persistent score tracking 
 ## How to Play
 
 1. **Open the game**: Simply open `index.html` in your web browser
-2. **Take turns**: Click on any empty cell to place your mark (X starts first)
-3. **Win or Draw**: Get three in a row (horizontally, vertically, or diagonally) to win
-4. **Restart**: Click "Restart Game" to play again with scores intact
-5. **Reset**: Click "Reset Scores" to clear all score history
+2. **Toggle theme**: Click the moon/sun icon in the top-right to switch between light and dark modes
+3. **Take turns**: Click on any empty cell to place your mark (X starts first)
+4. **Win or Draw**: Get three in a row (horizontally, vertically, or diagonally) to win
+5. **Restart**: Click "Restart Game" to play again with scores intact
+6. **Reset**: Click "Reset Scores" to clear all score history
 
 ## Keyboard Controls
 

@@ -2,6 +2,7 @@ const cells = document.querySelectorAll(".cell");
 const statusText = document.querySelector("#statusText");
 const restartButton = document.querySelector("#restartButton");
 const resetScoresButton = document.querySelector("#resetScoresButton");
+const themeToggle = document.querySelector("#themeToggle");
 const xWinsDisplay = document.querySelector("#xWins");
 const oWinsDisplay = document.querySelector("#oWins");
 const drawsDisplay = document.querySelector("#draws");
@@ -51,6 +52,20 @@ function updateScoreDisplay() {
   totalGamesDisplay.textContent = totalGames;
 }
 
+// Theme toggle functionality
+function toggleTheme() {
+  const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
+  const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+  document.documentElement.setAttribute('data-theme', newTheme);
+  localStorage.setItem('ticTacToeTheme', newTheme);
+  updateThemeIcon(newTheme);
+}
+
+function updateThemeIcon(theme) {
+  const icon = themeToggle.querySelector('.theme-icon');
+  icon.textContent = theme === 'light' ? '🌙' : '☀️';
+}
+
 loadScores();
 initializeGame();
 
@@ -61,6 +76,7 @@ function initializeGame() {
   });
   restartButton.addEventListener("click", restartGame);
   resetScoresButton.addEventListener("click", resetScores);
+  themeToggle.addEventListener("click", toggleTheme);
   statusText.textContent = `${currentPlayer}'s turn`;
   running = true;
 }
