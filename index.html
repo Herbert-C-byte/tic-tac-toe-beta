@@ -6,10 +6,26 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="styles.css">
   <title>Tic Tac Toe</title>
+  <script>
+    // Load theme preference before page renders to avoid flash
+    const theme = localStorage.getItem('ticTacToeTheme') || 'light';
+    document.documentElement.setAttribute('data-theme', theme);
+  </script>
 </head>
 <body>
+  <button id="themeToggle" type="button" class="theme-toggle" aria-label="Toggle dark/light theme">
+    <span class="theme-icon">🌙</span>
+  </button>
   <main id="gameContainer" role="main">
     <h1>Tic Tac Toe</h1>
+    <div id="scoreBoard">
+      <div class="score-item"><span class="score-label">X Wins:</span> <span id="xWins" class="score-value">0</span></div>
+      <div class="score-item"><span class="score-label">Draws:</span> <span id="draws" class="score-value">0</span></div>
+      <div class="score-item"><span class="score-label">O Wins:</span> <span id="oWins" class="score-value">0</span></div>
+    </div>
+    <div id="stats">
+      <p id="gamesPlayed">Games Played: <span id="totalGames">0</span></p>
+    </div>
     <div id="cellContainer" role="grid" aria-label="Tic Tac Toe board">
       <button type="button" data-cell-index="0" class="cell" aria-label="Cell 1" aria-pressed="false"></button>
       <button type="button" data-cell-index="1" class="cell" aria-label="Cell 2" aria-pressed="false"></button>
@@ -22,7 +38,10 @@
       <button type="button" data-cell-index="8" class="cell" aria-label="Cell 9" aria-pressed="false"></button>
     </div>
     <h2 id="statusText" aria-live="polite" aria-atomic="true"></h2>
-    <button id="restartButton" type="button">Restart</button>
+    <div id="buttonContainer">
+      <button id="restartButton" type="button" class="btn btn-primary">Restart Game</button>
+      <button id="resetScoresButton" type="button" class="btn btn-secondary">Reset Scores</button>
+    </div>
   </main>
 
   <script src="script.js"></script>

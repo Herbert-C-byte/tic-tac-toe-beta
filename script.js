@@ -1,6 +1,12 @@
 const cells = document.querySelectorAll(".cell");
 const statusText = document.querySelector("#statusText");
 const restartButton = document.querySelector("#restartButton");
+const resetScoresButton = document.querySelector("#resetScoresButton");
+const themeToggle = document.querySelector("#themeToggle");
+const xWinsDisplay = document.querySelector("#xWins");
+const oWinsDisplay = document.querySelector("#oWins");
+const drawsDisplay = document.querySelector("#draws");
+const totalGamesDisplay = document.querySelector("#totalGames");
 const winConditions = [
   [0, 1, 2],
   [3, 4, 5],
@@ -14,7 +20,53 @@ const winConditions = [
 let options = ["", "", "", "", "", "", "", "", ""];
 let currentPlayer = "X";
 let running = false;
+let xWins = 0;
+let oWins = 0;
+let draws = 0;
+let totalGames = 0;
 
+// Load scores from localStorage
+function loadScores() {
+  const saved = localStorage.getItem('ticTacToeScores');
+  if (saved) {
+    const data = JSON.parse(saved);
+    xWins = data.xWins || 0;
+    oWins = data.oWins || 0;
+    draws = data.draws || 0;
+    totalGames = data.totalGames || 0;
+    updateScoreDisplay();
+  }
+}
+
+// Save scores to localStorage
+function saveScores() {
+  const data = { xWins, oWins, draws, totalGames };
+  localStorage.setItem('ticTacToeScores', JSON.stringify(data));
+}
+
+// Update all score displays
+function updateScoreDisplay() {
+  xWinsDisplay.textContent = xWins;
+  oWinsDisplay.textContent = oWins;
+  drawsDisplay.textContent = draws;
+  totalGamesDisplay.textContent = totalGames;
+}
+
+// Theme toggle functionality
+function toggleTheme() {
+  const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
+  const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+  document.documentElement.setAttribute('data-theme', newTheme);
+  localStorage.setItem('ticTacToeTheme', newTheme);
+  updateThemeIcon(newTheme);
+}
+
+function updateThemeIcon(theme) {
+  const icon = themeToggle.querySelector('.theme-icon');
+  icon.textContent = theme === 'light' ? '🌙' : '☀️';
+}
+
+loadScores();
 initializeGame();
 
 function initializeGame() {
@@ -23,6 +75,8 @@ function initializeGame() {
     cell.addEventListener("keydown", cellKeyDown);
   });
   restartButton.addEventListener("click", restartGame);
+  resetScoresButton.addEventListener("click", resetScores);
+  themeToggle.addEventListener("click", toggleTheme);
   statusText.textContent = `${currentPlayer}'s turn`;
   running = true;
 }
@@ -63,6 +117,7 @@ function cellClicked() {
 function updateCell(cell, index) {
   options[index] = currentPlayer;
   cell.textContent = currentPlayer;
+  cell.setAttribute('data-player', currentPlayer);
   cell.setAttribute('aria-pressed', 'true');
   cell.disabled = true;
 }
@@ -95,11 +150,24 @@ function checkWinner() {
     if (winningCombo) {
       winningCombo.forEach(i => cells[i].classList.add('win'));
     }
+    // Update win counter
+    if (currentPlayer === "X") {
+      xWins++;
+    } else {
+      oWins++;
+    }
+    totalGames++;
+    updateScoreDisplay();
+    saveScores();
     cells.forEach(cell => cell.disabled = true);
   }
   else if(!options.includes("")){
     statusText.textContent = `Draw!`;
     running = false;
+    draws++;
+    totalGames++;
+    updateScoreDisplay();
+    saveScores();
   } 
   else{
     changePlayer();
@@ -113,7 +181,18 @@ function restartGame() {
     cell.textContent = "";
     cell.disabled = false;
     cell.setAttribute('aria-pressed', 'false');
+    cell.removeAttribute('data-player');
     cell.classList.remove('win');
   });
   running = true;
+}
+
+function resetScores() {
+  xWins = 0;
+  oWins = 0;
+  draws = 0;
+  totalGames = 0;
+  updateScoreDisplay();
+  saveScores();
+  restartGame();
 }
